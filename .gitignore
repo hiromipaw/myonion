@@ -1,4 +1,5 @@
 *~
 #*#
 *.pyc
-__pychace__
+__pycache__
+venv
