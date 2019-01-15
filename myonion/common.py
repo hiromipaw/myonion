@@ -137,7 +137,6 @@ class Common(object):
                     border: 0px;
                 }""",
 
-            # Common styles between ShareMode and ReceiveMode and their child widgets
             'mode_info_label': """
                 QLabel {
                     font-size: 12px;
@@ -208,7 +207,6 @@ class Common(object):
                     width: 10px;
                 }""",
 
-            # Share mode and child widget styles
             'share_zip_progess_bar': """
                 QProgressBar {
                     border: 1px solid #4e064f;

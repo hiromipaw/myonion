@@ -46,9 +46,6 @@ url = 'https://github.com/hiromipaw/myonion'
 license = 'GPL v3'
 keywords = 'onion, share, website, myonion, tor, anonymous, web server'
 data_files=[
-        (os.path.join(sys.prefix, 'share/applications'), ['install/myonion.desktop']),
-        (os.path.join(sys.prefix, 'share/appdata'), ['install/myonion.appdata.xml']),
-        (os.path.join(sys.prefix, 'share/pixmaps'), ['install/myonion80.xpm']),
         (os.path.join(sys.prefix, 'share/myonion'), file_list('share')),
         (os.path.join(sys.prefix, 'share/myonion/images'), file_list('share/images')),
         (os.path.join(sys.prefix, 'share/myonion/locale'), file_list('share/locale')),
@@ -56,9 +53,6 @@ data_files=[
         (os.path.join(sys.prefix, 'share/myonion/static/images'), file_list('share/static/images')),
         (os.path.join(sys.prefix, 'share/myonion/static/js'), file_list('share/static/js'))
     ]
-if platform.system() != 'OpenBSD':
-    data_files.append(('/usr/share/nautilus-python/extensions/', ['install/scripts/myonion-nautilus.py']))
-
 setup(
     name='myonion', version=version,
     description=description, long_description=long_description,

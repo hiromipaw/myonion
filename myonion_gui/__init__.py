@@ -27,7 +27,6 @@ from PyQt5 import QtCore, QtWidgets
 
 from myonion import strings
 from myonion.common import Common
-from myonion.onion import Onion
 from myonion.myonion import MyOnion
 
 from .myonion_gui import MyOnionGui
