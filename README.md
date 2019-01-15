@@ -4,7 +4,7 @@ your command line, via cli, or more simply via gui.
 
 This project explore the idea of running ephemeral onion services on the Tor
 network. Someone that may want to run an onion service to share websites or simple web
-applications can use the MyOnion wrapper app to start a .onion from your computer
+applications can use the MyOnion wrapper app to start a .onion from their computer
 and share a static website or a web application.
 
 
