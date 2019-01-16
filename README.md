@@ -1,4 +1,4 @@
-MyOnion is a proof of concept to run onion services into docker container from
+MyOnion is a proof of concept to run onion services into docker containers from
 your command line, via cli, or more simply via gui.
 
 
