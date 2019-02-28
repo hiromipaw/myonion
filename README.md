@@ -1,5 +1,5 @@
 MyOnion is a proof of concept to run onion services into docker containers from
-your command line, via cli, or more simply via gui.
+your command line, via cli, or more simply via gui. 
 
 
 This project explore the idea of running ephemeral onion services on the Tor
@@ -7,6 +7,7 @@ network. Someone that may want to run an onion service to share websites or simp
 applications can use the MyOnion wrapper app to start a .onion from their computer
 and share a static website or a web application.
 
+The idea of MyOnion started from [onionshare](http://github.com/micahflee/onionshare/), but instead of sharing files, with MyOnion people can share web applications and start using onion services with a few clicks.
 
 Tor is an important tool providing privacy and anonymity online. The property of
 anonymity itself is more than just providing an encrypted connection between the
