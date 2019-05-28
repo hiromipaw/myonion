@@ -1,24 +1,5 @@
-FROM debian
-
-MAINTAINER hiro <hiro@torproject.org>
-
-RUN \
-    apt-get update && \
-    apt-get install -y nginx tor && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-    chown -R www-data:www-data /var/lib/nginx
-
-COPY default /etc/nginx/sites-available/
-
-# Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
-
-# Define working directory.
-WORKDIR /etc/nginx
-
-# Define default command.
-CMD ["nginx"]
+FROM ruby:2.5
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client tor ruby-nokogiri
 
 # Add user
 
@@ -29,12 +10,27 @@ COPY tor/torrc /etc/tor
 RUN ln -s /home/peer/web /srv/web.myonion
 RUN chown -R peer /home/peer
 
+RUN mkdir /home/peer/myapp
+WORKDIR /home/peer/myapp
+COPY app/Gemfile /home/peer/myapp/Gemfile
+COPY app/Gemfile.lock /home/peer/myapp/Gemfile.lock
+COPY app /home/peer/myapp
+
+WORKDIR /home/peer/myapp
+RUN gem install nokogiri
+RUN bundle update nokogiri
+RUN bundle install --full-index
+
+# Add a script to be executed every time the container starts.
+COPY app/entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+RUN ln -s /home/peer/web /srv/web.myonion
+RUN chown -R peer /home/peer
+
 USER peer
 
-WORKDIR /home/peer
-
-CMD ["tor"]
-
-VOLUME peer
-
+ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 80
+
+# Start the main process.
+CMD ["rails", "server", "-b", "0.0.0.0"]

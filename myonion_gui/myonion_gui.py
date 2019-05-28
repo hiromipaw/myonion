@@ -58,16 +58,25 @@ class MyOnionGui(QtWidgets.QMainWindow):
         self.system_tray.show()
 
         # Buttons
-        self.share_mode_button = QtWidgets.QPushButton(strings._('gui_mode_share_button', True));
-        self.share_mode_button.setFixedHeight(50)
-        self.share_mode_button.clicked.connect(self.share_mode_clicked)
+        self.website_mode_button = QtWidgets.QPushButton(strings._('gui_mode_website_button', True));
+        self.website_mode_button.setFixedHeight(50)
+        self.website_mode_button.clicked.connect(self.website_mode_clicked)
 
+        self.solid_mode_button = QtWidgets.QPushButton(strings._('gui_mode_solid_button', True));
+        self.solid_mode_button.setFixedHeight(50)
+        self.solid_mode_button.clicked.connect(self.solid_mode_clicked)
+
+        self.rails_mode_button = QtWidgets.QPushButton(strings._('gui_mode_rails_button', True));
+        self.rails_mode_button.setFixedHeight(50)
+        self.rails_mode_button.clicked.connect(self.rails_mode_clicked)
 
         mode_switcher_layout = QtWidgets.QHBoxLayout();
         mode_switcher_layout.setSpacing(0)
-        mode_switcher_layout.addWidget(self.share_mode_button)
+        mode_switcher_layout.addWidget(self.website_mode_button)
+        mode_switcher_layout.addWidget(self.solid_mode_button)
+        mode_switcher_layout.addWidget(self.rails_mode_button)
 
-        # Layouts)
+        # Layouts
 
         layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
@@ -79,13 +88,26 @@ class MyOnionGui(QtWidgets.QMainWindow):
 
         self.show()
 
-    def share_mode_clicked(self):
-        self.common.log('OnionShareGui', 'share_mode_clicked')
-        self.update_mode_switcher()
+    def website_mode_clicked(self):
+        self.common.log('OnionShareGui', 'website_mode_clicked')
+        self.update_mode_switcher('website')
 
+    def solid_mode_clicked(self):
+        self.common.log('OnionShareGui', 'solid_mode_clicked')
+        self.update_mode_switcher('solid')
 
-    def update_mode_switcher(self):
+    def rails_mode_clicked(self):
+        self.common.log('OnionShareGui', 'rails_mode_clicked')
+        self.update_mode_switcher('rails')
+
+    def update_mode_switcher(self, target):
         # Based on the current mode, switch the mode switcher button styles,
         # and show and hide widgets to switch modes
-        self.share_mode_button.setStyleSheet(self.common.css['mode_switcher_selected_style'])
-        self.app.start_onion_service()
+        if target == 'website':
+            self.website_mode_button.setStyleSheet(self.common.css['mode_switcher_selected_style'])
+        elif target == 'solid':
+            self.solid_mode_button.setStyleSheet(self.common.css['mode_switcher_selected_style'])
+        elif target == 'rails':
+            self.rails_mode_button.setStyleSheet(self.common.css['mode_switcher_selected_style'])
+
+        self.app.start_onion_service(target)

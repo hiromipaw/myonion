@@ -70,7 +70,7 @@
 ## address y:z.
 
 HiddenServiceDir /home/peer/onion_web_service/
-HiddenServicePort 80 127.0.0.1:3000
+HiddenServicePort 80 127.0.0.1:80
 
 ################ This section is just for relays #####################
 #

@@ -1,6 +1,8 @@
 {
     "systray_menu_exit": "Quit",
     "gui_settings_window_title": "Settings",
-    "gui_mode_share_button": "Start Onion Service",
+    "gui_mode_website_button": "Start Onion Website",
+    "gui_mode_solid_button": "Start Onion Solid app",
+    "gui_mode_rails_button": "Start Onion Rails app",
     "version_string": "MyOnion {0:s} | https://github.com/hiromipaw/myonion"
 }

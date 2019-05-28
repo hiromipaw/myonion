@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os, shutil, docker
+import os, shutil, docker, time
 
 from . import common
 
@@ -35,7 +35,7 @@ class MyOnion(object):
 
         self.common.log('MyOnion', '__init__')
 
-    def start_onion_service(self):
+    def start_onion_service(self, target):
         """
         Start the myonion onion service.
         """
@@ -44,22 +44,29 @@ class MyOnion(object):
 
         client = docker.from_env()
         print("Building docker container ... \n")
+        time.sleep(5)
+        resource_path = 'containers/' + target
 
-        build = [line for line in api_client.build(path=self.common.get_resource_path('containers/website'), tag='website', dockerfile='./Dockerfile')]
+        build = [line for line in api_client.build(path=self.common.get_resource_path(resource_path), tag=target, dockerfile='./Dockerfile')]
 
-        container = client.containers.run('website:latest', detach=True, tty=True)
+        target_run = target + ':latest'
+        container = client.containers.run(target_run, detach=True, tty=True)
 
-        print("\nRunning nginx ... \n ")
-        nginx = container.exec_run('nginx', user='root', stdout=True, stderr=True, detach=True).output
-        print(container.logs())
+        if target != 'rails':
+            print("\nRunning nginx ... \n ")
+            time.sleep(5)
+            nginx = container.exec_run('nginx', user='root', stdout=True, stderr=True, detach=True).output
+            print(container.logs())
 
         print("\nRunning tor ... \n ")
-        nginx = container.exec_run('tor', user='root', stdout=True, stderr=True, detach=True).output
+        tor = container.exec_run('tor', user='root', stdout=True, stderr=True, detach=True).output
         print(container.logs())
+        time.sleep(5)
 
-        onion = container.exec_run('cat onion_web_service/hostname', user='root').output
+        if target != 'rails':
+            container.exec_run('sed -i -e \'s/server_name _/server_name 746ts4dkulh6zoo5.onion/g\' /etc/nginx/sites-available/default', user='root')
 
-        container.exec_run('sed -i -e \'s/server_name _/server_name 746ts4dkulh6zoo5.onion/g\' /etc/nginx/sites-available/default', user='root')
+        onion = container.exec_run('cat /home/peer/onion_web_service/hostname', user='root').output
 
         print("\nPlease connect via Tor Browser to the following .onion address \n")
         print(onion)

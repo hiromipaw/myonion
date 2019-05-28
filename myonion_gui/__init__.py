@@ -84,6 +84,7 @@ def main():
 
     # Clean up when app quits
     def shutdown():
+        # Define cleanup function
         app.cleanup()
     qtapp.aboutToQuit.connect(shutdown)
 
