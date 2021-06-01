@@ -23,5 +23,5 @@ PySocks==1.6.8
 requests==2.19.1
 six==1.11.0
 stem==1.6.0
-urllib3==1.23
+urllib3==1.26.5
 Werkzeug==0.15.3
